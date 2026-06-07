@@ -1,0 +1,10 @@
+.godot/
+*.godot.uid
+builds/
+export/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.keystore
+*.jks
