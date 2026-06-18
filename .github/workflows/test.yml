@@ -1,0 +1,122 @@
+name: Test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+env:
+  GODOT_VERSION: "4.3-stable"
+  GUT_VERSION: "v9.3.0"
+
+jobs:
+  unit-tests:
+    name: GUT unit tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot binary
+        uses: actions/cache@v4
+        with:
+          path: /tmp/godot
+          key: godot-${{ env.GODOT_VERSION }}-linux-x86_64
+
+      - name: Download Godot headless
+        run: |
+          if [ ! -x /tmp/godot ]; then
+            mkdir -p /tmp/godot-bin
+            cd /tmp/godot-bin
+            URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-linux.x86_64.zip"
+            echo "Downloading $URL"
+            curl -fsSL "$URL" -o godot.zip
+            unzip -o godot.zip
+            mv Godot_v*_linux.x86_64 /tmp/godot
+            chmod +x /tmp/godot
+          fi
+          /tmp/godot --version
+
+      - name: Install GUT addon
+        env:
+          GUT_VERSION: ${{ env.GUT_VERSION }}
+        run: bash scripts/install_gut.sh
+
+      - name: Run GUT unit tests
+        run: |
+          mkdir -p test-results
+          /tmp/godot --headless --path . \
+            -s addons/gut/gut_cmdln.gd \
+            -gdir=res://test/unit \
+            -gexit \
+            -gjunit_xml=test-results/gut-results.xml 2>&1 | tee test-results/gut-output.log
+          # GUT exits non-zero if any test fails
+          exit ${PIPESTATUS[0]}
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gut-unit-test-results
+          path: test-results/
+          retention-days: 14
+
+  headless-playtest:
+    name: Headless playthrough smoke test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot binary
+        uses: actions/cache@v4
+        with:
+          path: /tmp/godot
+          key: godot-${{ env.GODOT_VERSION }}-linux-x86_64
+
+      - name: Download Godot headless
+        run: |
+          if [ ! -x /tmp/godot ]; then
+            mkdir -p /tmp/godot-bin
+            cd /tmp/godot-bin
+            URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-linux.x86_64.zip"
+            curl -fsSL "$URL" -o godot.zip
+            unzip -o godot.zip
+            mv Godot_v*_linux.x86_64 /tmp/godot
+            chmod +x /tmp/godot
+          fi
+          /tmp/godot --version
+
+      - name: Run headless playthrough (qa/test_playthrough.gd)
+        run: |
+          mkdir -p test-results
+          # Run for max 10 seconds — if the scene crashes or prints "FAIL" we fail CI.
+          set +e
+          /tmp/godot --headless --path . \
+            --main-scene res://scenes/test_runner.tscn \
+            --quit-after 10 2>&1 | tee test-results/playtest.log
+          EXIT=$?
+          set -e
+
+          # Godot may exit 0 even when scripts print errors, so scan the log
+          if grep -E "SCRIPT ERROR|Cannot|FAIL:|SOME TESTS FAILED" test-results/playtest.log; then
+            echo "::error::Headless playthrough reported errors or test failures"
+            exit 1
+          fi
+          if ! grep -q "TRANCH QA TEST SUITE" test-results/playtest.log; then
+            echo "::error::Test suite did not start — scene failed to load"
+            exit 1
+          fi
+          echo "Headless playthrough OK."
+
+      - name: Upload playtest log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: headless-playtest-log
+          path: test-results/playtest.log
+          retention-days: 14

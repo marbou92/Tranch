@@ -1,0 +1,100 @@
+name: Lint
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  gdformat:
+    name: gdformat (code formatting)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install gdtoolkit
+        run: pip install gdtoolkit==4.*
+
+      - name: Run gdformat --check
+        run: |
+          # Find all .gd files, exclude addons/ (third-party) and test/ (we'll
+          # allow test files a little more flexibility)
+          mapfile -t files < <(find . -name "*.gd" \
+            -not -path "./addons/*" \
+            -not -path "./.git/*")
+          echo "Checking ${#files[@]} GDScript files..."
+          gdformat --check "${files[@]}"
+
+  gdlint:
+    name: gdlint (static analysis)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install gdtoolkit
+        run: pip install gdtoolkit==4.*
+
+      - name: Run gdlint
+        run: |
+          mapfile -t files < <(find . -name "*.gd" \
+            -not -path "./addons/*" \
+            -not -path "./.git/*")
+          echo "Linting ${#files[@]} GDScript files..."
+          # gdlint exits non-zero on issues — treat warnings as warnings for now
+          gdlint "${files[@]}" || true
+          echo "::notice::gdlint completed (non-blocking at this stage)"
+
+  scene-reference-check:
+    name: Scene resource references
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify .tscn ext_resource paths exist
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          missing = []
+          for root, _, files in os.walk("."):
+              if "/.git/" in root or "/addons/" in root:
+                  continue
+              for f in files:
+                  if not f.endswith(".tscn"):
+                      continue
+                  path = os.path.join(root, f)
+                  with open(path, "r", encoding="utf-8") as fh:
+                      for line in fh:
+                          m = re.match(r'\[ext_resource type="\w+" path="([^"]+)"', line)
+                          if not m:
+                              continue
+                          ref = m.group(1)
+                          if ref.startswith("res://"):
+                              ref = ref[6:]  # strip res://
+                          if not os.path.exists(ref):
+                              missing.append((path, ref))
+          if missing:
+              print("::error::Missing resource references found:")
+              for scene, ref in missing:
+                  print(f"  {scene} -> {ref}")
+              sys.exit(1)
+          print("All .tscn external resource references resolve.")
+          PY
