@@ -1,0 +1,43 @@
+# Godot 4.x
+.import/
+.mono/
+data_*/
+*.os
+*.so
+*.dll
+*.dylib
+builds/
+.DS_Store
+Thumbs.db
+
+# Editor-local overrides
+override.cfg
+
+# Godot export template cache (per-machine)
+*.local
+
+# Keep export_presets.cfg committed — CI needs it
+# (secrets like keystore paths are passed via env vars, not stored in the file)
+# export_presets.cfg
+
+# Localization — generated, source CSVs are committed
+*.translation
+
+# IDE / editor cruft
+.vscode/
+.idea/
+*.swp
+*~
+.bak
+
+# OS junk
+ehthumbs.db
+Desktop.ini
+
+# Python venv (for gdtoolkit locally)
+.venv/
+__pycache__/
+*.pyc
+
+# GUT test output
+test-results/
