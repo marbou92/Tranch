@@ -1,0 +1,125 @@
+[gd_scene load_steps=2 format=3 uid="uid://z02sciencewing"]
+
+[ext_resource type="Script" path="res://zones/zone_base.gd" id="1"]
+
+[node name="ScienceWing" type="Node3D"]
+script = ExtResource("1")
+zone_id = "science_wing"
+zone_name = "Science Wing"
+threat_level = 3
+has_safe_room = false
+ambient_color = Color(0.04, 0.06, 0.05, 1)
+fog_enabled = true
+fog_density = 0.02
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="."]
+light_color = Color(0.04, 0.06, 0.05, 1)
+light_energy = 0.2
+omni_range = 12.0
+
+[node name="ChemLabLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, 0)
+light_color = Color(0.1, 0.15, 0.08, 1)
+light_energy = 0.4
+omni_range = 8.0
+
+[node name="BioLabLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, 0)
+light_color = Color(0.08, 0.12, 0.1, 1)
+light_energy = 0.35
+omni_range = 8.0
+
+[node name="Rooms" type="Node3D" parent="."]
+
+[node name="ChemLab" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="BioLab" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="PrepRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="ContainmentRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="Storage01" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+
+[node name="Storage02" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+
+[node name="Greenhouse" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="LectureTheatre" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="PatrolWaypoints" type="Node3D" parent="."]
+
+[node name="WP_01" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WP_02" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="WP_03" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="WP_04" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+
+[node name="WP_05" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="CrawlerNests" type="Node3D" parent="."]
+
+[node name="Crawler_UnderBioLab" type="Marker3D" parent="CrawlerNests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Crawler_VentShaft" type="Marker3D" parent="CrawlerNests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -3)
+
+[node name="KeyItemLocations" type="Node3D" parent="."]
+
+[node name="Battery_01" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 0)
+
+[node name="Battery_02" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 4)
+
+[node name="KeyFragment2" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -4)
+
+[node name="TRN7Vial" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+
+[node name="PuzzleLocations" type="Node3D" parent="."]
+
+[node name="ContainmentLockPuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+
+[node name="ZoneTriggers" type="Node3D" parent="."]
+
+[node name="ToMainBuilding" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToMainBuilding"]
+
+[node name="ToCourtyard" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToCourtyard"]
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

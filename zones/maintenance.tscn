@@ -1,0 +1,138 @@
+[gd_scene load_steps=2 format=3 uid="uid://z06maintenance"]
+
+[ext_resource type="Script" path="res://zones/zone_base.gd" id="1"]
+
+[node name="Maintenance" type="Node3D"]
+script = ExtResource("1")
+zone_id = "maintenance"
+zone_name = "Maintenance & Tunnels"
+threat_level = 5
+has_safe_room = false
+ambient_color = Color(0.02, 0.02, 0.03, 1)
+fog_enabled = true
+fog_density = 0.04
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="."]
+light_color = Color(0.02, 0.02, 0.03, 1)
+light_energy = 0.1
+omni_range = 8.0
+
+[node name="BoilerRoomLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, 0)
+light_color = Color(0.12, 0.06, 0.02, 1)
+light_energy = 0.35
+omni_range = 6.0
+
+[node name="ElectricalFlicker" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, 0)
+light_color = Color(0.08, 0.08, 0.04, 1)
+light_energy = 0.25
+omni_range = 5.0
+
+[node name="TunnelLight01" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5)
+light_color = Color(0.05, 0.05, 0.03, 1)
+light_energy = 0.15
+omni_range = 4.0
+
+[node name="TunnelLight02" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+light_color = Color(0.05, 0.05, 0.03, 1)
+light_energy = 0.15
+omni_range = 4.0
+
+[node name="Rooms" type="Node3D" parent="."]
+
+[node name="BoilerRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="UtilityTunnels" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+
+[node name="ElectricalRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="JanitorsQuarters" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="ServiceElevator" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="PatrolWaypoints" type="Node3D" parent="."]
+
+[node name="WP_01" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WP_02" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="WP_03" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="WP_04" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+
+[node name="WP_05" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="WP_06" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+
+[node name="WP_07" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="KeyItemLocations" type="Node3D" parent="."]
+
+[node name="ElevatorKey" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 4)
+
+[node name="Fuse" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 0)
+
+[node name="Battery_01" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -7)
+
+[node name="LoreNote_HaroldDiary01" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 0)
+
+[node name="LoreNote_HaroldDiary02" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 4)
+
+[node name="LoreNote_HaroldDiary03" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -10)
+
+[node name="LoreNote_HaroldDiary04" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, -4)
+
+[node name="PuzzleLocations" type="Node3D" parent="."]
+
+[node name="ElevatorRepairPuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, -4)
+
+[node name="FuseBoxPuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0)
+
+[node name="ZoneTriggers" type="Node3D" parent="."]
+
+[node name="ToCourtyard" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToCourtyard"]
+
+[node name="ToBasementLab" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -14)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToBasementLab"]
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

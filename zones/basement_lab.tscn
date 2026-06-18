@@ -1,0 +1,158 @@
+[gd_scene load_steps=2 format=3 uid="uid://z07basementlab"]
+
+[ext_resource type="Script" path="res://zones/zone_base.gd" id="1"]
+
+[node name="BasementLab" type="Node3D"]
+script = ExtResource("1")
+zone_id = "basement_lab"
+zone_name = "Basement Laboratory"
+threat_level = 5
+has_safe_room = false
+ambient_color = Color(0.02, 0.03, 0.04, 1)
+fog_enabled = true
+fog_density = 0.035
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="."]
+light_color = Color(0.02, 0.03, 0.04, 1)
+light_energy = 0.1
+omni_range = 6.0
+
+[node name="ExperimentChamberLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+light_color = Color(0.06, 0.1, 0.08, 1)
+light_energy = 0.3
+omni_range = 8.0
+
+[node name="MarshOfficeLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.5, 6)
+light_color = Color(0.1, 0.08, 0.04, 1)
+light_energy = 0.35
+omni_range = 5.0
+
+[node name="PowerRoomGlow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -6)
+light_color = Color(0.08, 0.04, 0.04, 1)
+light_energy = 0.25
+omni_range = 5.0
+
+[node name="ContainmentGlow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 4)
+light_color = Color(0.04, 0.08, 0.06, 1)
+light_energy = 0.2
+omni_range = 4.0
+
+[node name="Rooms" type="Node3D" parent="."]
+
+[node name="SpecimenRooms" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="SpecimenRoomA" type="Node3D" parent="Rooms/SpecimenRooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="SpecimenRoomB" type="Node3D" parent="Rooms/SpecimenRooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="ExperimentChamber" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="MarshOffice" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="ContainmentCells" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="ContainmentCell01" type="Node3D" parent="Rooms/ContainmentCells"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="ContainmentCell02" type="Node3D" parent="Rooms/ContainmentCells"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="ContainmentCell03" type="Node3D" parent="Rooms/ContainmentCells"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="PowerRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="PatrolWaypoints" type="Node3D" parent="."]
+
+[node name="WP_01" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WP_02" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="WP_03" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="WP_04" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="WP_05" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="WP_06" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="WP_07" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="TeacherSpawnPoint" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="KeyItemLocations" type="Node3D" parent="."]
+
+[node name="MarshFinalReport" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 6)
+
+[node name="TRN7AntidoteComponent01" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="TRN7AntidoteComponent02" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, -3)
+
+[node name="TRN7AntidoteComponent03" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, -6)
+
+[node name="LoreNote_Lab01" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="LoreNote_Lab02" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 0)
+
+[node name="LoreNote_Lab03" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 2)
+
+[node name="LoreNote_Lab04" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, -6)
+
+[node name="LoreNote_Lab05" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 6)
+
+[node name="PuzzleLocations" type="Node3D" parent="."]
+
+[node name="ContainmentOverridePuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 4)
+
+[node name="AntidoteSynthesisPuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="PowerRestorationPuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, -6)
+
+[node name="ZoneTriggers" type="Node3D" parent="."]
+
+[node name="ToMaintenance" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToMaintenance"]
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)

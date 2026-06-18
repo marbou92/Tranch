@@ -1,0 +1,170 @@
+[gd_scene load_steps=2 format=3 uid="uid://z01mainbuilding"]
+
+[ext_resource type="Script" path="res://zones/zone_base.gd" id="1"]
+
+[node name="MainBuilding" type="Node3D"]
+script = ExtResource("1")
+zone_id = "main_building"
+zone_name = "Main Building"
+threat_level = 2
+has_safe_room = true
+ambient_color = Color(0.05, 0.05, 0.08, 1)
+fog_enabled = true
+fog_density = 0.015
+
+[node name="Floor1" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="Floor1"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor1/Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="Floor1"]
+light_color = Color(0.05, 0.05, 0.08, 1)
+light_energy = 0.3
+omni_range = 15.0
+
+[node name="Floor2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+
+[node name="Floor" type="StaticBody3D" parent="Floor2"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor2/Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="Floor2"]
+light_color = Color(0.04, 0.04, 0.07, 1)
+light_energy = 0.2
+omni_range = 15.0
+
+[node name="Floor3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0, 0)
+
+[node name="Floor" type="StaticBody3D" parent="Floor3"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor3/Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="Floor3"]
+light_color = Color(0.03, 0.03, 0.06, 1)
+light_energy = 0.15
+omni_range = 15.0
+
+[node name="Rooms" type="Node3D" parent="."]
+
+[node name="PrincipalsOffice" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 5)
+
+[node name="Library" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -8)
+
+[node name="StaffRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
+
+[node name="Classroom01" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
+
+[node name="Classroom02" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="Classroom03" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+
+[node name="Classroom04" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3.5, -3)
+
+[node name="Classroom05" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, -3)
+
+[node name="Classroom06" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3.5, -3)
+
+[node name="Classroom07" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 7, -3)
+
+[node name="Classroom08" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -3)
+
+[node name="Classroom09" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7, -3)
+
+[node name="Classroom10" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3.5, 5)
+
+[node name="Classroom11" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 7, 5)
+
+[node name="Classroom12" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7, -8)
+
+[node name="PatrolWaypoints" type="Node3D" parent="."]
+
+[node name="WP_01" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WP_02" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+
+[node name="WP_03" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="WP_04" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 5)
+
+[node name="WP_05" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3.5, -5)
+
+[node name="WP_06" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7, 5)
+
+[node name="WP_07" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 8)
+
+[node name="WP_08" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.5, -7)
+
+[node name="SafeRooms" type="Node3D" parent="."]
+
+[node name="StaffRoomSafe" type="Marker3D" parent="SafeRooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
+
+[node name="KeyItemLocations" type="Node3D" parent="."]
+
+[node name="Battery_01" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, 3)
+
+[node name="Battery_02" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -6)
+
+[node name="Battery_03" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, -2)
+
+[node name="KeyFragment1" type="Marker3D" parent="KeyItemLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.5, 5)
+
+[node name="PuzzleLocations" type="Node3D" parent="."]
+
+[node name="PrincipalSafePuzzle" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.5, 5)
+
+[node name="ZoneTriggers" type="Node3D" parent="."]
+
+[node name="ToCourtyard" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToCourtyard"]
+
+[node name="ToScienceWing" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToScienceWing"]
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

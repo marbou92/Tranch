@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3 uid="uid://z08exterior"]
+
+[ext_resource type="Script" path="res://zones/zone_base.gd" id="1"]
+
+[node name="Exterior" type="Node3D"]
+script = ExtResource("1")
+zone_id = "exterior"
+zone_name = "Exterior Grounds"
+threat_level = 0
+has_safe_room = true
+ambient_color = Color(0.02, 0.02, 0.04, 1)
+fog_enabled = true
+fog_density = 0.03
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+
+[node name="AmbientLight" type="OmniLight3D" parent="."]
+light_color = Color(0.02, 0.02, 0.04, 1)
+light_energy = 0.1
+omni_range = 30.0
+
+[node name="MoonLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, -0.75, 0.433, 0, 20, 0)
+light_color = Color(0.1, 0.1, 0.16, 1)
+light_energy = 0.2
+shadow_enabled = true
+
+[node name="BusStopLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 8)
+light_color = Color(0.12, 0.1, 0.06, 1)
+light_energy = 0.4
+omni_range = 6.0
+
+[node name="ParkingLotLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 5, -5)
+light_color = Color(0.1, 0.08, 0.06, 1)
+light_energy = 0.3
+omni_range = 10.0
+
+[node name="FenceLight01" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -15)
+light_color = Color(0.06, 0.06, 0.1, 1)
+light_energy = 0.2
+omni_range = 5.0
+
+[node name="Rooms" type="Node3D" parent="."]
+
+[node name="ParkingLot" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -5)
+
+[node name="SportsField" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="BusStop" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
+
+[node name="BikeSheds" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 8)
+
+[node name="PerimeterFence" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="PatrolWaypoints" type="Node3D" parent="."]
+
+[node name="WP_01" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WP_02" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -5)
+
+[node name="WP_03" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
+
+[node name="WP_04" type="Marker3D" parent="PatrolWaypoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="SafeRooms" type="Node3D" parent="."]
+
+[node name="BusStopSafe" type="Marker3D" parent="SafeRooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
+
+[node name="PuzzleLocations" type="Node3D" parent="."]
+
+[node name="FenceBreachPoint" type="Marker3D" parent="PuzzleLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -15)
+
+[node name="ZoneTriggers" type="Node3D" parent="."]
+
+[node name="ToCourtyard" type="Area3D" parent="ZoneTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTriggers/ToCourtyard"]
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
