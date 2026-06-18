@@ -11,7 +11,10 @@ permissions:
 
 env:
   GODOT_VERSION: "4.3-stable"
-  GUT_VERSION: "v9.3.0"
+  # v9.4.0 is the official recommended GUT version for Godot 4.3.x
+  # (per https://github.com/bitwes/Gut README). v9.3.0 had a broken
+  # GutUtils import in CLI mode.
+  GUT_VERSION: "v9.4.0"
 
 jobs:
   unit-tests:
