@@ -2,9 +2,9 @@ name: Test
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, master, develop]
   pull_request:
-    branches: [main, develop]
+    branches: [main, master, develop]
 
 permissions:
   contents: read
@@ -41,10 +41,33 @@ jobs:
           fi
           /tmp/godot --version
 
-      - name: Install GUT addon
+      - name: Install GUT addon (inlined — no external script)
         env:
           GUT_VERSION: ${{ env.GUT_VERSION }}
-        run: bash scripts/install_gut.sh
+        run: |
+          # This was previously in scripts/install_gut.sh, but GitHub web upload
+          # blocks .sh files. Inlined here so CI works without the separate file.
+          set -euo pipefail
+          ADDON_DIR="addons/gut"
+          if [ -f "${ADDON_DIR}/gut_cmdln.gd" ]; then
+            echo "[install_gut] GUT already present, skipping."
+            exit 0
+          fi
+          echo "[install_gut] Downloading GUT ${GUT_VERSION}..."
+          TMP_DIR="$(mktemp -d)"
+          GUT_URL="https://github.com/bitwes/Gut/archive/refs/tags/${GUT_VERSION}.tar.gz"
+          curl -fsSL "${GUT_URL}" -o "${TMP_DIR}/gut.tar.gz"
+          tar -xzf "${TMP_DIR}/gut.tar.gz" -C "${TMP_DIR}"
+          SRC_DIR="$(find "${TMP_DIR}" -maxdepth 1 -type d -name 'Gut-*' | head -1)"
+          if [ -z "${SRC_DIR}" ]; then
+            echo "[install_gut] FATAL: extracted archive did not contain Gut-* directory" >&2
+            exit 1
+          fi
+          mkdir -p addons
+          cp -r "${SRC_DIR}/addons/gut" "${ADDON_DIR}"
+          rm -rf "${TMP_DIR}"
+          echo "[install_gut] GUT installed to ${ADDON_DIR}"
+          ls -la "${ADDON_DIR}" | head -10
 
       - name: Run GUT unit tests
         run: |
