@@ -2,9 +2,9 @@ name: Lint
 
 on:
   push:
-    branches: [main, master, develop]
+    branches: [main, develop]
   pull_request:
-    branches: [main, master, develop]
+    branches: [main, develop]
 
 permissions:
   contents: read
@@ -26,7 +26,8 @@ jobs:
 
       - name: Run gdformat --check
         run: |
-          # Find all .gd files, exclude addons/ (third-party)
+          # Find all .gd files, exclude addons/ (third-party) and test/ (we'll
+          # allow test files a little more flexibility)
           mapfile -t files < <(find . -name "*.gd" \
             -not -path "./addons/*" \
             -not -path "./.git/*")

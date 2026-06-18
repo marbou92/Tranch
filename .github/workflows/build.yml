@@ -40,8 +40,8 @@ jobs:
           mkdir -p /tmp/templates
           if [ ! -x /tmp/godot ]; then
             cd /tmp
-            EDITOR_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-linux.x86_64.zip"
-            TPL_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-export_templates.tpz"
+            EDITOR_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+            TPL_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz"
             curl -fsSL "$EDITOR_URL" -o editor.zip
             unzip -o editor.zip
             mv Godot_v*_linux.x86_64 /tmp/godot
@@ -118,8 +118,8 @@ jobs:
           mkdir -p /tmp/templates
           if [ ! -x /tmp/godot ]; then
             cd /tmp
-            EDITOR_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-linux.x86_64.zip"
-            TPL_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-export_templates.tpz"
+            EDITOR_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+            TPL_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz"
             curl -fsSL "$EDITOR_URL" -o editor.zip
             unzip -o editor.zip
             mv Godot_v*_linux.x86_64 /tmp/godot
