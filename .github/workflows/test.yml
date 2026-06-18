@@ -63,11 +63,23 @@ jobs:
             echo "[install_gut] FATAL: extracted archive did not contain Gut-* directory" >&2
             exit 1
           fi
+          # IMPORTANT: 'cp -r src dest' when dest/ already exists copies src INTO
+          # dest, creating dest/src/... instead of dest/... We use 'cp -rT' to
+          # force dest to be treated as the target directory (merges contents).
+          # Also remove the placeholder README first to avoid any conflicts.
+          rm -rf "${ADDON_DIR}"
           mkdir -p addons
-          cp -r "${SRC_DIR}/addons/gut" "${ADDON_DIR}"
+          cp -rT "${SRC_DIR}/addons/gut" "${ADDON_DIR}"
           rm -rf "${TMP_DIR}"
           echo "[install_gut] GUT installed to ${ADDON_DIR}"
-          ls -la "${ADDON_DIR}" | head -10
+          echo "=== Verifying gut_cmdln.gd exists ==="
+          ls -la "${ADDON_DIR}/gut_cmdln.gd" || {
+            echo "::error::gut_cmdln.gd NOT found after install"
+            find "${ADDON_DIR}" -type f | head -20
+            exit 1
+          }
+          echo "=== First 10 files in addons/gut/ ==="
+          ls -la "${ADDON_DIR}" | head -12
 
       - name: Run GUT unit tests
         run: |
