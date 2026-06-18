@@ -24,7 +24,7 @@ func test_sanity_starts_at_100():
 
 
 func test_drain_dark_reduces_sanity():
-	var start_sanity := SanitySystemAutoload.sanity
+	var start_sanity: float = SanitySystemAutoload.sanity
 	SanitySystemAutoload.drain_dark(1.0)  # 1 second of dark drain
 	assert_lt(SanitySystemAutoload.sanity, start_sanity, "Sanity should drop in the dark")
 	# DRAIN_DARK = 0.4/sec, so 1.0s of drain → −0.4
@@ -38,14 +38,14 @@ func test_drain_dark_reduces_sanity():
 
 func test_drain_dark_blocked_in_safe_room():
 	SanitySystemAutoload.set_safe_room(true)
-	var start_sanity := SanitySystemAutoload.sanity
+	var start_sanity: float = SanitySystemAutoload.sanity
 	SanitySystemAutoload.drain_dark(1.0)
 	assert_eq(SanitySystemAutoload.sanity, start_sanity, "Sanity should NOT drain in safe room")
 
 
 func test_drain_entity_rate_matches_gdd():
 	# GDD §4.1: entity drain is the strongest drain source
-	var start_sanity := SanitySystemAutoload.sanity
+	var start_sanity: float = SanitySystemAutoload.sanity
 	SanitySystemAutoload.drain_entity(1.0)
 	# DRAIN_ENTITY = 1.8/sec
 	assert_almost_eq(
@@ -103,12 +103,18 @@ func test_get_sanity_state_returns_correct_tier():
 func test_threshold_signal_emitted_when_crossing_50():
 	# GDD §4.1: 50 is the "soft heartbeat" threshold
 	SanitySystemAutoload._previous_threshold = 100.0
-	var signal_fired := false
+	# GDScript lambdas can't modify captured local primitives, so we use an
+	# Array (which is passed by reference) to record whether the signal fired.
+	var fired_thresholds: Array = []
 	SanitySystemAutoload.sanity_threshold_crossed.connect(
-		func(threshold: float):
-			if threshold == 50.0:
-				signal_fired = true
+		func(threshold: float): fired_thresholds.append(threshold)
 	)
 	SanitySystemAutoload.sanity = 49.0  # cross the 50 boundary
 	SanitySystemAutoload._check_thresholds()
-	assert_true(signal_fired, "Crossing 50 sanity should emit sanity_threshold_crossed(50.0)")
+	assert_true(
+		fired_thresholds.has(50.0),
+		(
+			"Crossing 50 sanity should emit sanity_threshold_crossed(50.0) — got: %s"
+			% str(fired_thresholds)
+		)
+	)

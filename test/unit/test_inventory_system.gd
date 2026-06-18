@@ -13,7 +13,7 @@ func test_inventory_has_8_slots():
 
 
 func test_add_item_fills_empty_slot():
-	var ok := InventorySystem.try_add_item("battery_01", InventorySystem.ItemCategory.POWER)
+	var ok: bool = InventorySystem.try_add_item("battery_01", InventorySystem.ItemCategory.POWER)
 	assert_true(ok, "Adding to empty inventory must succeed")
 	assert_eq(InventorySystem.slots[0].item_id, "battery_01")
 
@@ -21,10 +21,12 @@ func test_add_item_fills_empty_slot():
 func test_battery_stacks_to_4_max():
 	# GDD §4.4: Power — Flashlight battery — stack=yes — max=4
 	for i in range(4):
-		var ok := InventorySystem.try_add_item("battery_01", InventorySystem.ItemCategory.POWER)
+		var ok: bool = InventorySystem.try_add_item(
+			"battery_01", InventorySystem.ItemCategory.POWER
+		)
 		assert_true(ok, "Battery %d/4 should stack" % (i + 1))
 	# 5th battery must go into a NEW slot (not refused, just doesn't stack)
-	var ok := InventorySystem.try_add_item("battery_01", InventorySystem.ItemCategory.POWER)
+	var ok: bool = InventorySystem.try_add_item("battery_01", InventorySystem.ItemCategory.POWER)
 	assert_true(ok, "5th battery must spill into slot 2, not be refused")
 	assert_eq(InventorySystem.slots[0].count, 4, "Slot 0 must hold 4 stacked batteries")
 	assert_eq(InventorySystem.slots[1].item_id, "battery_01", "Slot 1 must hold the 5th battery")
@@ -49,13 +51,13 @@ func test_full_inventory_refusesNewItem():
 	for i in range(8):
 		InventorySystem.try_add_item("key_%d" % i, InventorySystem.ItemCategory.KEY)
 	# 9th should fail
-	var ok := InventorySystem.try_add_item("key_extra", InventorySystem.ItemCategory.KEY)
+	var ok: bool = InventorySystem.try_add_item("key_extra", InventorySystem.ItemCategory.KEY)
 	assert_false(ok, "Inventory must refuse items when all 8 slots are full of non-stackables")
 
 
 func test_remove_item_clears_slot():
 	InventorySystem.try_add_item("battery_01", InventorySystem.ItemCategory.POWER)
-	var removed := InventorySystem.remove_item(0)
+	var removed: Dictionary = InventorySystem.remove_item(0)
 	assert_eq(removed.item_id, "battery_01", "remove_item should return the removed item")
 	assert_eq(InventorySystem.slots[0].item_id, "", "Slot must be empty after remove")
 

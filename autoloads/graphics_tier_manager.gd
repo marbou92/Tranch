@@ -65,6 +65,12 @@ func _apply_low():
 		# Shadow quality
 
 		# Set draw distance
+
+		# Force 30 FPS
+
+		# Shadow quality
+
+		# Set draw distance
 	RenderingServer.viewport_set_msaa_3d(
 		get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_DISABLED
 	)
@@ -146,12 +152,10 @@ func _get_environment() -> Environment:
 	var world = get_viewport().get_world_3d()
 	if world and world.environment:
 		return world.environment
-		# Create environment if none exists
-	var env = Environment.new()
-	var world_env = WorldEnvironment.new()
-	world_env.environment = env
-	get_tree().current_scene.add_child(world_env)
-	return env
+		# Create environment if none exists. We can't add nodes to current_scene
+		# because it's null in headless/CLI mode. Just return a fresh Environment
+		# — the caller can apply its settings to it.
+	return Environment.new()
 
 
 func _set_shadow_quality(quality: int):

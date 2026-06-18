@@ -1,10 +1,21 @@
 extends Node3D
 
-const JANITOR_SCENE = preload("res://enemies/janitor.tscn")
-const CRAWLER_SCENE = preload("res://enemies/crawler.tscn")
-const TEACHER_SCENE = preload("res://enemies/teacher.tscn")
+# Enemy scene references — these will be loaded lazily when the scenes
+# exist (M1 will create janitor.tscn, M3 creates crawler.tscn, M5 creates
+# teacher.tscn). Using lazy load() instead of preload() so the spawner
+# script can compile without the scenes existing yet.
+const JANITOR_SCENE_PATH = "res://enemies/janitor.tscn"
+const CRAWLER_SCENE_PATH = "res://enemies/crawler.tscn"
+const TEACHER_SCENE_PATH = "res://enemies/teacher.tscn"
 
 var spawned_enemies: Dictionary = {}
+
+
+func _load_scene(path: String) -> PackedScene:
+	if not ResourceLoader.exists(path):
+		push_warning("Enemy spawner: scene not found at " + path + " — skipping spawn")
+		return null
+	return load(path)
 
 
 func _ready():
@@ -28,7 +39,12 @@ func _on_zone_unloaded(zone_id: String):
 
 func _spawn_janitor_if_needed(zone_id: String):
 	if "janitor" not in spawned_enemies or not is_instance_valid(spawned_enemies["janitor"]):
-		var janitor = JANITOR_SCENE.instantiate()
+		var janitor_scene = _load_scene(JANITOR_SCENE_PATH)
+		if janitor_scene == null:
+			return
+
+			# Find a patrol waypoint to spawn at
+		var janitor = janitor_scene.instantiate()
 		# Find a patrol waypoint to spawn at
 		var zones = get_tree().get_nodes_in_group("zones")
 		for zone in zones:
@@ -48,7 +64,10 @@ func _spawn_crawlers(zone_id: String):
 		if zone.zone_id == "science_wing" and zone.has_node("CrawlerNests"):
 			for nest in zone.get_node("CrawlerNests").get_children():
 				if nest is Marker3D:
-					var crawler = CRAWLER_SCENE.instantiate()
+					var crawler_scene = _load_scene(CRAWLER_SCENE_PATH)
+					if crawler_scene == null:
+						return
+					var crawler = crawler_scene.instantiate()
 					crawler.global_position = nest.global_position
 					get_tree().current_scene.add_child(crawler)
 					if not spawned_enemies.has("crawlers"):
@@ -58,7 +77,10 @@ func _spawn_crawlers(zone_id: String):
 
 func _spawn_teacher(zone_id: String):
 	if "teacher" not in spawned_enemies or not is_instance_valid(spawned_enemies["teacher"]):
-		var teacher = TEACHER_SCENE.instantiate()
+		var teacher_scene = _load_scene(TEACHER_SCENE_PATH)
+		if teacher_scene == null:
+			return
+		var teacher = teacher_scene.instantiate()
 		# Find teacher spawn point in basement lab
 		var zones = get_tree().get_nodes_in_group("zones")
 		for zone in zones:

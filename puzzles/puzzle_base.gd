@@ -7,6 +7,9 @@ class_name PuzzleBase
 @export var is_solved: bool = false
 @export var is_multi_step: bool = false
 @export var required_items: Array = []
+# Length of code for combination-style puzzles (used by courtyard_gate,
+# combination_lock, etc.). Default 0 = not a code puzzle.
+@export var code_length: int = 0
 
 signal puzzle_started(puzzle_id: String)
 signal puzzle_solved(puzzle_id: String)

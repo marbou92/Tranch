@@ -40,7 +40,7 @@ func test_pause_resume_round_trip():
 
 func test_player_died_increments_death_count():
 	GameState.start_game()
-	var deaths_before := GameState.death_count
+	var deaths_before: int = GameState.death_count
 	GameState.player_died("janitor")
 	assert_eq(
 		GameState.death_count, deaths_before + 1, "Death count must increment on player_died()"
@@ -83,5 +83,5 @@ func test_trigger_ending_records_unique_endings():
 
 func test_play_time_format():
 	GameState.play_time = 3661.0  # 1h 1m 1s
-	var time_str := GameState.get_play_time_string()
+	var time_str: String = GameState.get_play_time_string()
 	assert_eq(time_str, "01:01:01", "Play time string must be HH:MM:SS zero-padded")

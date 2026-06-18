@@ -1,7 +1,6 @@
 extends PuzzleBase
 
 @export var correct_code: String = "000"
-@export var code_length: int = 3
 @export var lock_type: String = "combo"  # combo or padlock
 
 var current_code: String = ""
@@ -9,6 +8,7 @@ var current_code: String = ""
 
 func _ready():
 	super._ready()
+	code_length = 3
 	current_code = ""
 	for i in range(code_length):
 		current_code += "0"

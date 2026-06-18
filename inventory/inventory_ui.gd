@@ -1,6 +1,9 @@
 extends Control
 
-const SLOT_SCENE = preload("res://ui/inventory_slot.tscn")
+# Slot scene reference — lazy-loaded. The scene file (inventory_slot.tscn)
+# will be created in M2 when we build the inventory UI properly. Until then,
+# the UI code compiles but won't render slots.
+const SLOT_SCENE_PATH = "res://ui/inventory_slot.tscn"
 var inventory: Node
 var is_open: bool = false
 
@@ -16,6 +19,13 @@ func _ready():
 		inventory.slot_changed.connect(_on_slot_changed)
 	EventBus.inventory_opened.connect(_open)
 	EventBus.inventory_closed.connect(_close)
+
+
+func _load_slot_scene() -> PackedScene:
+	if not ResourceLoader.exists(SLOT_SCENE_PATH):
+		push_warning("Inventory UI: slot scene not found at " + SLOT_SCENE_PATH)
+		return null
+	return load(SLOT_SCENE_PATH)
 
 
 func _unhandled_input(event):
@@ -45,9 +55,11 @@ func _close():
 func _refresh_slots():
 	for child in grid_container.get_children():
 		child.queue_free()
-
 	for i in range(inventory.MAX_SLOTS if inventory else 8):
-		var slot = SLOT_SCENE.instantiate()
+		var slot_scene = _load_slot_scene()
+		if slot_scene == null:
+			return
+		var slot = slot_scene.instantiate()
 		slot.slot_index = i
 		slot.clicked.connect(_on_slot_clicked)
 		grid_container.add_child(slot)
@@ -73,8 +85,12 @@ func _on_slot_clicked(slot_index: int, button: int):
 func _on_examine_item(slot_index: int):
 	if not inventory:
 		return
+
+		# Load 3D model for examination would go here
 	var item = inventory.get_slot(slot_index)
 	if item["item_id"] == "":
 		return
+
+		# Load 3D model for examination would go here
 	examine_panel.visible = true
 	# Load 3D model for examination would go here
