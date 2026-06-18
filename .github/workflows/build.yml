@@ -1,0 +1,162 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to build (default: current branch)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write   # required for creating GitHub Releases (when enabled later)
+
+env:
+  GODOT_VERSION: "4.3-stable"
+
+jobs:
+  build-windows:
+    name: Windows x64 build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: Cache Godot binary & templates
+        uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/godot
+            /tmp/templates
+          key: godot-${{ env.GODOT_VERSION }}-templates
+
+      - name: Download Godot editor + export templates
+        run: |
+          mkdir -p /tmp/templates
+          if [ ! -x /tmp/godot ]; then
+            cd /tmp
+            EDITOR_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-linux.x86_64.zip"
+            TPL_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-export_templates.tpz"
+            curl -fsSL "$EDITOR_URL" -o editor.zip
+            unzip -o editor.zip
+            mv Godot_v*_linux.x86_64 /tmp/godot
+            chmod +x /tmp/godot
+
+            # The .tpz is just a zip; extract the windows_release.exe to templates dir
+            curl -fsSL "$TPL_URL" -o templates.tpz
+            unzip -o templates.tpz -d /tmp/tpl-extract
+            mkdir -p /tmp/templates/${GODOT_VERSION}.stable
+            cp /tmp/tpl-extract/templates/windows_release_x86_64.exe /tmp/templates/${GODOT_VERSION}.stable/
+            cp /tmp/tpl-extract/templates/windows_release_x86_64.pdb /tmp/templates/${GODOT_VERSION}.stable/ 2>/dev/null || true
+          fi
+          /tmp/godot --version
+
+      - name: Export Windows build
+        env:
+          GODOT_EXPORT_TPL_DIR: /tmp/templates
+        run: |
+          mkdir -p builds/windows
+          # Templates live in ~/.local/share/godot/export_templates on Linux
+          mkdir -p ~/.local/share/godot/export_templates
+          cp -r /tmp/templates/* ~/.local/share/godot/export_templates/
+
+          /tmp/godot --headless --path . \
+            --export-release "Windows Desktop" builds/windows/Tranch.exe 2>&1 | tee build.log
+
+          # Fail if export didn't produce the executable
+          if [ ! -f builds/windows/Tranch.exe ]; then
+            echo "::error::Windows export failed — Tranch.exe not produced"
+            cat build.log
+            exit 1
+          fi
+          ls -la builds/windows/
+
+      - name: Zip Windows build
+        run: |
+          cd builds/windows
+          zip -r ../../Tranch-${{ github.ref_name }}-windows-x64.zip .
+          cd ../..
+          ls -la Tranch-*.zip
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tranch-windows-x64
+          path: builds/windows/
+          retention-days: 30
+
+  build-android:
+    name: Android ARM64 build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Cache Godot binary & templates
+        uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/godot
+            /tmp/templates
+          key: godot-${{ env.GODOT_VERSION }}-templates
+
+      - name: Download Godot editor + Android export template
+        run: |
+          mkdir -p /tmp/templates
+          if [ ! -x /tmp/godot ]; then
+            cd /tmp
+            EDITOR_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-linux.x86_64.zip"
+            TPL_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-export_templates.tpz"
+            curl -fsSL "$EDITOR_URL" -o editor.zip
+            unzip -o editor.zip
+            mv Godot_v*_linux.x86_64 /tmp/godot
+            chmod +x /tmp/godot
+
+            curl -fsSL "$TPL_URL" -o templates.tpz
+            unzip -o templates.tpz -d /tmp/tpl-extract
+            mkdir -p /tmp/templates/${GODOT_VERSION}.stable
+            # Android template is a pre-built .apk
+            cp /tmp/tpl-extract/templates/android_release.apk /tmp/templates/${GODOT_VERSION}.stable/
+          fi
+
+      - name: Export Android build (debug APK)
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ secrets.ANDROID_KEYSTORE_DEBUG_PATH || '' }}
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: ${{ secrets.ANDROID_KEYSTORE_DEBUG_USER || '' }}
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_DEBUG_PASSWORD || '' }}
+        run: |
+          mkdir -p builds/android
+          mkdir -p ~/.local/share/godot/export_templates
+          cp -r /tmp/templates/* ~/.local/share/godot/export_templates/
+
+          # Use debug preset by default (no signing required).
+          # Release .aab/.apk requires keystore secrets — see docs/CI-CD.md
+          /tmp/godot --headless --path . \
+            --export-release "Android (debug)" builds/android/Tranch-debug.apk 2>&1 | tee build.log
+
+          if [ ! -f builds/android/Tranch-debug.apk ]; then
+            echo "::error::Android export failed — Tranch-debug.apk not produced"
+            cat build.log
+            exit 1
+          fi
+          ls -la builds/android/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tranch-android-arm64
+          path: builds/android/
+          retention-days: 30
