@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" fill="#0a0a0f"/>
+  <rect x="14" y="14" width="100" height="100" fill="none" stroke="#3a2030" stroke-width="2"/>
+  <!-- Stylised 'T' for Tranch -->
+  <path d="M 32 40 L 96 40 M 64 40 L 64 96" stroke="#d04050" stroke-width="8" stroke-linecap="square" fill="none"/>
+  <!-- Subtle dot for "don't run" — a watching eye -->
+  <circle cx="64" cy="112" r="2" fill="#d04050"/>
+</svg>
