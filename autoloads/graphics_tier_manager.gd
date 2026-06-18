@@ -59,6 +59,12 @@ func _apply_low():
 		# Shadow quality
 
 		# Set draw distance
+
+		# Force 30 FPS
+
+		# Shadow quality
+
+		# Set draw distance
 	RenderingServer.viewport_set_msaa_3d(
 		get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_DISABLED
 	)
@@ -124,9 +130,10 @@ func _apply_high():
 		env.adjustment_enabled = true
 		env.adjustment_contrast = 1.1
 		env.adjustment_saturation = 0.85
-		env.dof_blur_far_enabled = true
-		env.dof_blur_far_distance = 50.0
-		env.dof_blur_far_transition = 30.0
+		# DOF blur moved to CameraAttributesPractical in Godot 4.x.
+		# We'll wire up a proper CameraAttributes resource on the
+		# WorldEnvironment node in M2 when we polish graphics tiers.
+		# For now, skipping DOF so the script doesn't error.
 	RenderingServer.viewport_set_msaa_3d(
 		get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_4X
 	)
