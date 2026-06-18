@@ -19,7 +19,7 @@ func _detect_hardware() -> Tier:
 	if OS.has_feature("android") or OS.has_feature("ios"):
 		return Tier.LOW
 
-	# Desktop detection
+		# Desktop detection
 	if ram_mb >= 7500:
 		return Tier.HIGH
 	elif ram_mb >= 3500:
@@ -54,6 +54,11 @@ func _apply_low():
 		env.glow_enabled = false
 		env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 
+		# Force 30 FPS
+
+		# Shadow quality
+
+		# Set draw distance
 	RenderingServer.viewport_set_msaa_3d(
 		get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_DISABLED
 	)
@@ -87,7 +92,6 @@ func _apply_medium():
 		env.adjustment_enabled = true
 		env.adjustment_contrast = 1.05
 		env.adjustment_saturation = 0.9
-
 	RenderingServer.viewport_set_msaa_3d(
 		get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_2X
 	)
@@ -123,7 +127,6 @@ func _apply_high():
 		env.dof_blur_far_enabled = true
 		env.dof_blur_far_distance = 50.0
 		env.dof_blur_far_transition = 30.0
-
 	RenderingServer.viewport_set_msaa_3d(
 		get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_4X
 	)
@@ -136,7 +139,7 @@ func _get_environment() -> Environment:
 	var world = get_viewport().get_world_3d()
 	if world and world.environment:
 		return world.environment
-	# Create environment if none exists
+		# Create environment if none exists
 	var env = Environment.new()
 	var world_env = WorldEnvironment.new()
 	world_env.environment = env
@@ -145,7 +148,11 @@ func _get_environment() -> Environment:
 
 
 func _set_shadow_quality(quality: int):
-	RenderingServer.directional_shadow_quality = quality
+	# Godot 4.3: directional_shadow_quality is a ProjectSettings property,
+	# not a RenderingServer member. Values match RenderingServer.SHADOW_QUALITY_*.
+	ProjectSettings.set_setting(
+		"rendering/lights_and_shadows/directional_shadow/soft_shadow_filter", quality
+	)
 
 
 func _set_texture_filter(high_quality: bool):
