@@ -1,0 +1,17 @@
+[
+	{"id": "battery", "name": "Flashlight Battery", "category": "power", "stackable": true, "max_stack": 4, "description": "A fresh battery. The label has worn off but it still holds a charge.", "use_effect": "restore_battery", "use_value": 35.0},
+	{"id": "painkiller", "name": "Painkillers", "category": "health", "stackable": true, "max_stack": 3, "description": "Over-the-counter pain relief. Helps steady the mind, if only slightly.", "use_effect": "restore_sanity", "use_value": 25.0},
+	{"id": "bandage", "name": "Bandage Roll", "category": "health", "stackable": true, "max_stack": 3, "description": "A standard first-aid bandage. More comfort than cure.", "use_effect": "restore_sanity", "use_value": 15.0},
+	{"id": "key_fragment_1", "name": "Key Fragment #1", "category": "key", "stackable": false, "max_stack": 1, "description": "A broken piece of a brass key. The edges are tarnished green.", "use_effect": "none"},
+	{"id": "key_fragment_2", "name": "Key Fragment #2", "category": "key", "stackable": false, "max_stack": 1, "description": "The second fragment. It fits against the first like a puzzle piece.", "use_effect": "none"},
+	{"id": "key_fragment_3", "name": "Key Fragment #3", "category": "key", "stackable": false, "max_stack": 1, "description": "Third fragment. The key is almost whole.", "use_effect": "none"},
+	{"id": "key_fragment_4", "name": "Key Fragment #4", "category": "key", "stackable": false, "max_stack": 1, "description": "The final fragment. When assembled, this key opens the basement elevator.", "use_effect": "none"},
+	{"id": "elevator_key", "name": "Elevator Key", "category": "key", "stackable": false, "max_stack": 1, "description": "A heavy brass key for the service elevator. The tag reads 'BASEMENT ONLY.'", "use_effect": "none"},
+	{"id": "wire_cutters", "name": "Wire Cutters", "category": "tool", "stackable": false, "max_stack": 1, "description": "Heavy-duty wire cutters. Could cut through chain link or electrical wire.", "use_effect": "none"},
+	{"id": "rope", "name": "Rope", "category": "tool", "stackable": false, "max_stack": 1, "description": "15 metres of nylon rope. Sturdy enough to climb or descend.", "use_effect": "none"},
+	{"id": "fuse", "name": "Spare Fuse", "category": "tool", "stackable": false, "max_stack": 1, "description": "A replacement fuse. 20 amp. Exactly what the maintenance tunnel fuse box needs.", "use_effect": "none"},
+	{"id": "distraction_stone", "name": "Distraction Stone", "category": "consumable", "stackable": true, "max_stack": 3, "description": "A heavy stone picked up from the courtyard. Throw it to create a distraction.", "use_effect": "distraction"},
+	{"id": "trn7_vial", "name": "TRN-7 Sample", "category": "key", "stackable": false, "max_stack": 1, "description": "A sealed glass vial containing a faintly luminescent green liquid. The label reads: TRN-7 — ACTIVE. DO NOT OPEN.", "use_effect": "none"},
+	{"id": "marsh_final_report", "name": "Dr. Marsh's Final Report", "category": "story", "stackable": false, "max_stack": 1, "description": "The complete final report of Project TRANCH. Detailed documentation of the TRN-7 compound, its effects, and Subject H.B. This is the evidence.", "use_effect": "none"},
+	{"id": "trn7_antidote", "name": "TRN-7 Antidote", "category": "key", "stackable": false, "max_stack": 1, "description": "A synthesised neutralisation compound. If administered to Subject H.B., it may reverse the TRN-7 effects. May.", "use_effect": "none"}
+]

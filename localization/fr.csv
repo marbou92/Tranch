@@ -1,0 +1,40 @@
+key,fr
+GAME_TITLE,TRANCH
+GAME_SUBTITLE,"Ne cours pas. Il entend tout."
+MAIN_MENU_PLAY,Jouer
+MAIN_MENU_SETTINGS,Paramètres
+MAIN_MENU_QUIT,Quitter
+PAUSE_RESUME,Reprendre
+PAUSE_SAVE,Sauvegarder
+PAUSE_SETTINGS,Paramètres
+PAUSE_QUIT,Retour au menu
+DEATH_JANITOR,"Le concierge vous a trouvé."
+DEATH_CRAWLER,"Quelque chose vous a attrapé dans l'obscurité."
+DEATH_TEACHER,"Elle vous a entendu."
+DEATH_SANITY,"Votre esprit n'a pas pu supporter."
+DEATH_DEFAULT,"Vous n'avez pas survécu à la nuit."
+DEATH_CONTINUE,Continuer
+INTERACT_OPEN,"E — Ouvrir"
+INTERACT_CLOSE,"E — Fermer"
+INTERACT_PICKUP,"E — Ramasser"
+INTERACT_EXAMINE,"E — Examiner"
+INTERACT_USE,"E — Utiliser"
+FLASHLIGHT_ON,Lampe allumée
+FLASHLIGHT_OFF,Lampe éteinte
+FLASHLIGHT_LOW,Batterie faible!
+INVENTORY_TITLE,Inventaire
+JOURNAL_TITLE,Journal
+JOURNAL_EMPTY,Pas encore de notes
+SAVE_SUCCESSFUL,Jeu sauvegardé
+SAVE_FAILED,Sauvegarde échouée
+ZONE_MAIN_BUILDING,Bâtiment principal
+ZONE_SCIENCE_WING,Aile scientifique
+ZONE_GYMNASIUM,Gymnase
+ZONE_CAFETERIA,Cafétéria
+ZONE_COURTWAY,Cour
+ZONE_MAINTENANCE,Maintenance
+ZONE_BASEMENT_LAB,Laboratoire sous-sol
+ZONE_EXTERIOR,Extérieur
+ENDING_BAD,Mauvaise fin
+ENDING_TRUE,Vraie fin
+ENDING_SECRET,Fin secrète

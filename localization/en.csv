@@ -1,0 +1,66 @@
+key,en
+GAME_TITLE,TRANCH
+GAME_SUBTITLE,"Don't run. He hears everything."
+MAIN_MENU_PLAY,Play
+MAIN_MENU_SETTINGS,Settings
+MAIN_MENU_QUIT,Quit
+PAUSE_RESUME,Resume
+PAUSE_SAVE,Save
+PAUSE_SETTINGS,Settings
+PAUSE_QUIT,Quit to Menu
+DEATH_JANITOR,"The Janitor found you."
+DEATH_CRAWLER,"Something grabbed you from the dark."
+DEATH_TEACHER,"She heard you."
+DEATH_SANITY,"Your mind could not take any more."
+DEATH_DEFAULT,"You did not survive the night."
+DEATH_CONTINUE,Continue
+INTERACT_OPEN,"E — Open"
+INTERACT_CLOSE,"E — Close"
+INTERACT_PICKUP,"E — Pick up"
+INTERACT_EXAMINE,"E — Examine"
+INTERACT_USE,"E — Use"
+INTERACT_COMBINE,"E — Combine"
+FLASHLIGHT_ON,Flashlight on
+FLASHLIGHT_OFF,Flashlight off
+FLASHLIGHT_LOW,Battery low!
+INVENTORY_TITLE,Inventory
+JOURNAL_TITLE,Journal
+JOURNAL_EMPTY,No notes yet
+SAVE_SUCCESSFUL,Game saved
+SAVE_FAILED,Save failed
+LOAD_SUCCESSFUL,Game loaded
+LOAD_FAILED,Load failed
+ZONE_MAIN_BUILDING,Main Building
+ZONE_SCIENCE_WING,Science Wing
+ZONE_GYMNASIUM,Gymnasium
+ZONE_CAFETERIA,Cafeteria
+ZONE_COURTWAY,Courtyard
+ZONE_MAINTENANCE,Maintenance
+ZONE_BASEMENT_LAB,Basement Laboratory
+ZONE_EXTERIOR,Exterior Grounds
+ENDING_BAD,Bad Ending
+ENDING_TRUE,True Ending
+ENDING_SECRET,Secret Ending
+SETTING_AUDIO,Audio
+SETTING_CONTROLS,Controls
+SETTING_GRAPHICS,Graphics
+SETTING_ACCESSIBILITY,Accessibility
+SETTING_MASTER_VOL,Master Volume
+SETTING_MUSIC_VOL,Music Volume
+SETTING_SFX_VOL,SFX Volume
+SETTING_AMBIENT_VOL,Ambient Volume
+SETTING_MOUSE_SENS,Mouse Sensitivity
+SETTING_INVERT_Y,Invert Y-Axis
+SETTING_FOV,Field of View
+SETTING_GRAPHICS_TIER,Graphics Quality
+SETTING_VSYNC,VSync
+SETTING_FPS_CAP,FPS Cap
+SETTING_SUBTITLES,Subtitles
+SETTING_AUDIO_INDICATORS,Audio Indicators
+SETTING_COLORBLIND,Colorblind Mode
+SETTING_TEXT_SIZE,Text Size
+SETTING_PERMADEATH,Permadeath Mode
+TIER_LOW,Low
+TIER_MEDIUM,Medium
+TIER_HIGH,High
+TIER_AUTO,Auto-Detect

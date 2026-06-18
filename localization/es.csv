@@ -1,0 +1,40 @@
+key,es
+GAME_TITLE,TRANCH
+GAME_SUBTITLE,"No corras. Él lo escucha todo."
+MAIN_MENU_PLAY,Jugar
+MAIN_MENU_SETTINGS,Configuración
+MAIN_MENU_QUIT,Salir
+PAUSE_RESUME,Reanudar
+PAUSE_SAVE,Guardar
+PAUSE_SETTINGS,Configuración
+PAUSE_QUIT,Volver al menú
+DEATH_JANITOR,"El conserje te encontró."
+DEATH_CRAWLER,"Algo te agarró desde la oscuridad."
+DEATH_TEACHER,"Ella te escuchó."
+DEATH_SANITY,"Tu mente no pudo soportarlo."
+DEATH_DEFAULT,"No sobreviviste la noche."
+DEATH_CONTINUE,Continuar
+INTERACT_OPEN,"E — Abrir"
+INTERACT_CLOSE,"E — Cerrar"
+INTERACT_PICKUP,"E — Recoger"
+INTERACT_EXAMINE,"E — Examinar"
+INTERACT_USE,"E — Usar"
+FLASHLIGHT_ON,Linterna encendida
+FLASHLIGHT_OFF,Linterna apagada
+FLASHLIGHT_LOW,¡Batería baja!
+INVENTORY_TITLE,Inventario
+JOURNAL_TITLE,Diario
+JOURNAL_EMPTY,Sin notas aún
+SAVE_SUCCESSFUL,Juego guardado
+SAVE_FAILED,Error al guardar
+ZONE_MAIN_BUILDING,Edificio principal
+ZONE_SCIENCE_WING,Ala de ciencias
+ZONE_GYMNASIUM,Gimnasio
+ZONE_CAFETERIA,Cafetería
+ZONE_COURTWAY,Patio
+ZONE_MAINTENANCE,Mantenimiento
+ZONE_BASEMENT_LAB,Laboratorio sótano
+ZONE_EXTERIOR,Exterior
+ENDING_BAD,Mal final
+ENDING_TRUE,Final verdadero
+ENDING_SECRET,Final secreto

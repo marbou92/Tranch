@@ -1,0 +1,40 @@
+key,de
+GAME_TITLE,TRANCH
+GAME_SUBTITLE,"Lauf nicht. Er hört alles."
+MAIN_MENU_PLAY,Spielen
+MAIN_MENU_SETTINGS,Einstellungen
+MAIN_MENU_QUIT,Beenden
+PAUSE_RESUME,Fortsetzen
+PAUSE_SAVE,Speichern
+PAUSE_SETTINGS,Einstellungen
+PAUSE_QUIT,Zum Menü
+DEATH_JANITOR,"Der Hausmeister hat dich gefunden."
+DEATH_CRAWLER,"Etwas hat dich aus dem Dunkeln gepackt."
+DEATH_TEACHER,"Sie hat dich gehört."
+DEATH_SANITY,"Dein Geist konnte es nicht ertragen."
+DEATH_DEFAULT,"Du hast die Nacht nicht überlebt."
+DEATH_CONTINUE,Weiter
+INTERACT_OPEN,"E — Öffnen"
+INTERACT_CLOSE,"E — Schließen"
+INTERACT_PICKUP,"E — Aufheben"
+INTERACT_EXAMINE,"E — Untersuchen"
+INTERACT_USE,"E — Benutzen"
+FLASHLIGHT_ON,Taschenlampe an
+FLASHLIGHT_OFF,Taschenlampe aus
+FLASHLIGHT_LOW,Batterie schwach!
+INVENTORY_TITLE,Inventar
+JOURNAL_TITLE,Tagebuch
+JOURNAL_EMPTY,Noch keine Notizen
+SAVE_SUCCESSFUL,Spiel gespeichert
+SAVE_FAILED,Speichern fehlgeschlagen
+ZONE_MAIN_BUILDING,Hauptgebäude
+ZONE_SCIENCE_WING,Naturwissenschaften
+ZONE_GYMNASIUM,Sporthalle
+ZONE_CAFETERIA,Kantine
+ZONE_COURTWAY,Hof
+ZONE_MAINTENANCE,Wartung
+ZONE_BASEMENT_LAB,Labor im Keller
+ZONE_EXTERIOR,Außengelände
+ENDING_BAD,Schlechtes Ende
+ENDING_TRUE,Wahres Ende
+ENDING_SECRET,Geheimes Ende
