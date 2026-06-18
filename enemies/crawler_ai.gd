@@ -23,16 +23,18 @@ var player_ref: Node3D = null
 signal crawler_triggered
 signal crawler_lunge_hit
 
+
 func _ready():
 	add_to_group("enemies")
 	add_to_group("crawlers")
 	lunge_origin = global_position
-	
+
 	if trigger_area:
 		trigger_area.body_entered.connect(_on_body_entered_trigger)
-	
+
 	await get_tree().create_timer(0.5).timeout
 	player_ref = get_tree().get_first_node_in_group("player")
+
 
 func _process(delta):
 	match state:
@@ -45,10 +47,12 @@ func _process(delta):
 		State.RETREAT:
 			_tick_retreat(delta)
 
+
 func _on_body_entered_trigger(body: Node3D):
 	if body.is_in_group("player") and state == State.DORMANT:
 		state = State.TRIGGERED
 		crawler_triggered.emit()
+
 
 func _check_flashlight(delta):
 	if not player_ref:
@@ -66,6 +70,7 @@ func _check_flashlight(delta):
 		else:
 			flashlight_timer = 0.0
 
+
 func _start_lunge():
 	state = State.LUNGE
 	anim.play("lunge")
@@ -75,15 +80,16 @@ func _start_lunge():
 	var dist_to_player = global_position.distance_to(player_ref.global_position)
 	click_audio.volume_db = -10.0 + (1.0 - min(dist_to_player / 5.0, 1.0)) * 20.0
 
+
 func _tick_lunge(delta):
 	if not player_ref:
 		state = State.RETREAT
 		return
-	
+
 	var target_pos = player_ref.global_position
 	var dir = (target_pos - global_position).normalized()
 	global_position += dir * LUNGE_SPEED * delta
-	
+
 	var dist = global_position.distance_to(target_pos)
 	if dist < 0.5:
 		# Hit player
@@ -96,16 +102,18 @@ func _tick_lunge(delta):
 		state = State.RETREAT
 		retreat_timer = RETREAT_TIME
 
+
 func _tick_retreat(delta):
 	retreat_timer -= delta
 	# Slowly move back toward origin
 	var dir = (lunge_origin - global_position).normalized()
 	global_position += dir * 1.0 * delta
-	
+
 	if retreat_timer <= 0:
 		global_position = lunge_origin
 		state = State.DORMANT
 		anim.play("dormant")
+
 
 func _retreat_slightly():
 	var away_from_player = (global_position - player_ref.global_position).normalized()

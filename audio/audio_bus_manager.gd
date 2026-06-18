@@ -16,6 +16,7 @@ var reverb_buses: Dictionary = {}
 
 const REVERB_BUS_NAMES = ["corridor", "classroom", "gym", "tunnel", "outdoor"]
 
+
 func _ready():
 	_setup_audio_buses()
 	_setup_stem_players()
@@ -25,6 +26,7 @@ func _ready():
 	EventBus.enemy_catch_triggered.connect(_on_catch)
 	EventBus.zone_entered.connect(_on_zone_changed)
 
+
 func _setup_audio_buses():
 	# Create reverb buses for each room type
 	for bus_name in REVERB_BUS_NAMES:
@@ -33,6 +35,7 @@ func _setup_audio_buses():
 		AudioServer.set_bus_name(bus_idx, "Reverb_" + bus_name)
 		AudioServer.set_bus_send(bus_idx, "Master")
 		reverb_buses[bus_name] = bus_idx
+
 
 func _setup_stem_players():
 	# Create audio players for each stem
@@ -44,13 +47,20 @@ func _setup_stem_players():
 		add_child(player)
 		stem_players[stem] = player
 
+
 func _on_music_state_changed(new_state: String):
 	match new_state:
-		"calm": set_music_state(MusicState.CALM)
-		"tense": set_music_state(MusicState.TENSE)
-		"alert": set_music_state(MusicState.ALERT)
-		"chase": set_music_state(MusicState.CHASE)
-		"caught": set_music_state(MusicState.CAUGHT)
+		"calm":
+			set_music_state(MusicState.CALM)
+		"tense":
+			set_music_state(MusicState.TENSE)
+		"alert":
+			set_music_state(MusicState.ALERT)
+		"chase":
+			set_music_state(MusicState.CHASE)
+		"caught":
+			set_music_state(MusicState.CAUGHT)
+
 
 func set_music_state(new_state: MusicState):
 	if current_state == new_state:
@@ -93,12 +103,14 @@ func set_music_state(new_state: MusicState):
 			await get_tree().create_timer(0.5).timeout
 			_play_caught_sting()
 
+
 func _fade_stem(stem_name: String, target_db: float, time: float):
 	var player = stem_players.get(stem_name)
 	if not player:
 		return
 	var tween = create_tween()
 	tween.tween_property(player, "volume_db", target_db, time)
+
 
 func _play_caught_sting():
 	# Load and play the caught sting
@@ -110,8 +122,10 @@ func _play_caught_sting():
 	await player.finished
 	player.queue_free()
 
+
 func _on_chase_started(_enemy_id: String):
 	set_music_state(MusicState.CHASE)
+
 
 func _on_chase_ended(_enemy_id: String):
 	# Transition back through alert
@@ -120,23 +134,34 @@ func _on_chase_ended(_enemy_id: String):
 	if current_state == MusicState.ALERT:
 		set_music_state(MusicState.TENSE)
 
+
 func _on_catch(_enemy_id: String):
 	set_music_state(MusicState.CAUGHT)
+
 
 func _on_zone_changed(zone_id: String):
 	# Update reverb based on zone type
 	var reverb_type = "corridor"  # default
 	match zone_id:
-		"main_building": reverb_type = "corridor"
-		"science_wing": reverb_type = "classroom"
-		"gymnasium": reverb_type = "gym"
-		"maintenance": reverb_type = "tunnel"
-		"exterior": reverb_type = "outdoor"
-		"courtyard": reverb_type = "outdoor"
-		"cafeteria": reverb_type = "corridor"
-		"basement_lab": reverb_type = "tunnel"
+		"main_building":
+			reverb_type = "corridor"
+		"science_wing":
+			reverb_type = "classroom"
+		"gymnasium":
+			reverb_type = "gym"
+		"maintenance":
+			reverb_type = "tunnel"
+		"exterior":
+			reverb_type = "outdoor"
+		"courtyard":
+			reverb_type = "outdoor"
+		"cafeteria":
+			reverb_type = "corridor"
+		"basement_lab":
+			reverb_type = "tunnel"
 
 	EventBus.ambient_changed.emit(zone_id)
+
 
 func play_sfx(path: String, position: Vector3 = Vector3.ZERO):
 	var player = AudioStreamPlayer3D.new()
@@ -148,6 +173,7 @@ func play_sfx(path: String, position: Vector3 = Vector3.ZERO):
 	player.play()
 	await player.finished
 	player.queue_free()
+
 
 func update_based_on_enemies():
 	# Check enemy states to determine music

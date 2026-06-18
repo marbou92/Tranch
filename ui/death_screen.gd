@@ -11,11 +11,13 @@ var death_causes: Dictionary = {
 	"default": "You did not survive the night.",
 }
 
+
 func _ready():
 	visible = false
 	continue_button.pressed.connect(_on_continue)
 	EventBus.death_screen_show.connect(_show)
 	EventBus.death_screen_hide.connect(_hide)
+
 
 func _show(cause: String = ""):
 	visible = true
@@ -25,9 +27,11 @@ func _show(cause: String = ""):
 	# Black fade in
 	$AnimationPlayer.play("fade_in")
 
+
 func _hide():
 	visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 
 func _on_continue():
 	EventBus.death_screen_hide.emit()

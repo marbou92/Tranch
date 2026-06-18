@@ -6,6 +6,7 @@ extends PuzzleBase
 var activated_valves: Array = []
 var all_valves_open: bool = false
 
+
 func activate_valve(valve_index: int):
 	if is_solved:
 		return
@@ -25,6 +26,7 @@ func activate_valve(valve_index: int):
 	if activated_valves.size() == correct_sequence.size():
 		solve()
 		all_valves_open = true
+
 
 func reset_sequence():
 	activated_valves.clear()

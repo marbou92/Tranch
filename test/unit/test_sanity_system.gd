@@ -28,7 +28,12 @@ func test_drain_dark_reduces_sanity():
 	SanitySystemAutoload.drain_dark(1.0)  # 1 second of dark drain
 	assert_lt(SanitySystemAutoload.sanity, start_sanity, "Sanity should drop in the dark")
 	# DRAIN_DARK = 0.4/sec, so 1.0s of drain → −0.4
-	assert_almost_eq(SanitySystemAutoload.sanity, start_sanity - 0.4, 0.001, "Drain amount should match DRAIN_DARK constant")
+	assert_almost_eq(
+		SanitySystemAutoload.sanity,
+		start_sanity - 0.4,
+		0.001,
+		"Drain amount should match DRAIN_DARK constant"
+	)
 
 
 func test_drain_dark_blocked_in_safe_room():
@@ -43,7 +48,9 @@ func test_drain_entity_rate_matches_gdd():
 	var start_sanity := SanitySystemAutoload.sanity
 	SanitySystemAutoload.drain_entity(1.0)
 	# DRAIN_ENTITY = 1.8/sec
-	assert_almost_eq(SanitySystemAutoload.sanity, start_sanity - 1.8, 0.001, "Entity drain must match GDD §4.1")
+	assert_almost_eq(
+		SanitySystemAutoload.sanity, start_sanity - 1.8, 0.001, "Entity drain must match GDD §4.1"
+	)
 
 
 func test_drain_entity_clamps_at_zero():
@@ -56,7 +63,11 @@ func test_use_medicine_restores_25():
 	SanitySystemAutoload.sanity = 50.0
 	SanitySystemAutoload.use_medicine()
 	# RESTORE_MEDICINE = 25.0
-	assert_eq(SanitySystemAutoload.sanity, 75.0, "Medicine should restore exactly 25 sanity (GDD §4 inventory)")
+	assert_eq(
+		SanitySystemAutoload.sanity,
+		75.0,
+		"Medicine should restore exactly 25 sanity (GDD §4 inventory)"
+	)
 
 
 func test_use_medicine_clamps_at_100():
@@ -82,8 +93,11 @@ func test_get_sanity_state_returns_correct_tier():
 	for sanity_value in cases:
 		SanitySystemAutoload.sanity = sanity_value
 		var expected: String = cases[sanity_value]
-		assert_eq(SanitySystemAutoload.get_sanity_state(), expected,
-			"Sanity %s should map to state '%s'" % [sanity_value, expected])
+		assert_eq(
+			SanitySystemAutoload.get_sanity_state(),
+			expected,
+			"Sanity %s should map to state '%s'" % [sanity_value, expected]
+		)
 
 
 func test_threshold_signal_emitted_when_crossing_50():

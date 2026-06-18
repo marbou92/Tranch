@@ -6,9 +6,11 @@ const TEACHER_SCENE = preload("res://enemies/teacher.tscn")
 
 var spawned_enemies: Dictionary = {}
 
+
 func _ready():
 	EventBus.zone_loaded.connect(_on_zone_loaded)
 	EventBus.zone_unloaded.connect(_on_zone_unloaded)
+
 
 func _on_zone_loaded(zone_id: String):
 	match zone_id:
@@ -19,8 +21,10 @@ func _on_zone_loaded(zone_id: String):
 		"basement_lab":
 			_spawn_teacher(zone_id)
 
+
 func _on_zone_unloaded(zone_id: String):
 	_despawn_enemies_in_zone(zone_id)
+
 
 func _spawn_janitor_if_needed(zone_id: String):
 	if "janitor" not in spawned_enemies or not is_instance_valid(spawned_enemies["janitor"]):
@@ -36,6 +40,7 @@ func _spawn_janitor_if_needed(zone_id: String):
 		get_tree().current_scene.add_child(janitor)
 		spawned_enemies["janitor"] = janitor
 
+
 func _spawn_crawlers(zone_id: String):
 	# Find crawler nest markers in the zone
 	var zones = get_tree().get_nodes_in_group("zones")
@@ -50,6 +55,7 @@ func _spawn_crawlers(zone_id: String):
 						spawned_enemies["crawlers"] = []
 					spawned_enemies["crawlers"].append(crawler)
 
+
 func _spawn_teacher(zone_id: String):
 	if "teacher" not in spawned_enemies or not is_instance_valid(spawned_enemies["teacher"]):
 		var teacher = TEACHER_SCENE.instantiate()
@@ -61,6 +67,7 @@ func _spawn_teacher(zone_id: String):
 				break
 		get_tree().current_scene.add_child(teacher)
 		spawned_enemies["teacher"] = teacher
+
 
 func _despawn_enemies_in_zone(zone_id: String):
 	# Don't despawn the janitor - it moves between zones

@@ -16,14 +16,16 @@ func before_each():
 
 
 func test_initial_phase_is_menu():
-	assert_eq(GameState.current_phase, GameState.GamePhase.MENU,
-		"Game should start in MENU phase")
+	assert_eq(GameState.current_phase, GameState.GamePhase.MENU, "Game should start in MENU phase")
 
 
 func test_start_game_transitions_to_playing():
 	GameState.start_game()
-	assert_eq(GameState.current_phase, GameState.GamePhase.PLAYING,
-		"start_game() should transition to PLAYING")
+	assert_eq(
+		GameState.current_phase,
+		GameState.GamePhase.PLAYING,
+		"start_game() should transition to PLAYING"
+	)
 
 
 func test_pause_resume_round_trip():
@@ -40,8 +42,9 @@ func test_player_died_increments_death_count():
 	GameState.start_game()
 	var deaths_before := GameState.death_count
 	GameState.player_died("janitor")
-	assert_eq(GameState.death_count, deaths_before + 1,
-		"Death count must increment on player_died()")
+	assert_eq(
+		GameState.death_count, deaths_before + 1, "Death count must increment on player_died()"
+	)
 	assert_eq(GameState.current_phase, GameState.GamePhase.DEAD)
 
 
@@ -49,15 +52,13 @@ func test_add_lore_deduplicates():
 	GameState.add_lore("note_001")
 	GameState.add_lore("note_001")  # duplicate — should be ignored
 	GameState.add_lore("note_002")
-	assert_eq(GameState.lore_collected.size(), 2,
-		"Lore collection must deduplicate by id")
+	assert_eq(GameState.lore_collected.size(), 2, "Lore collection must deduplicate by id")
 
 
 func test_solve_puzzle_deduplicates():
 	GameState.solve_puzzle("principal_combo")
 	GameState.solve_puzzle("principal_combo")
-	assert_eq(GameState.puzzles_solved.size(), 1,
-		"Puzzle solves must deduplicate by id")
+	assert_eq(GameState.puzzles_solved.size(), 1, "Puzzle solves must deduplicate by id")
 
 
 func test_key_fragments_drive_acts():
@@ -76,13 +77,11 @@ func test_trigger_ending_records_unique_endings():
 	GameState.trigger_ending("bad")
 	GameState.trigger_ending("bad")  # duplicate
 	GameState.trigger_ending("true")
-	assert_eq(GameState.endings_seen.size(), 2,
-		"Endings seen list must deduplicate")
+	assert_eq(GameState.endings_seen.size(), 2, "Endings seen list must deduplicate")
 	assert_eq(GameState.current_phase, GameState.GamePhase.ENDING)
 
 
 func test_play_time_format():
 	GameState.play_time = 3661.0  # 1h 1m 1s
 	var time_str := GameState.get_play_time_string()
-	assert_eq(time_str, "01:01:01",
-		"Play time string must be HH:MM:SS zero-padded")
+	assert_eq(time_str, "01:01:01", "Play time string must be HH:MM:SS zero-padded")

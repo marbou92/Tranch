@@ -9,10 +9,12 @@ var audio_indicators_enabled: bool = false
 var subtitle_queue: Array = []
 var current_subtitle_timer: float = 0.0
 
+
 func _ready():
 	EventBus.play_sfx.connect(_on_sfx_played)
 	# Connect to subtitle events
 	# Audio indicator shows directional arrows for nearby sounds
+
 
 func _process(delta):
 	if current_subtitle_timer > 0:
@@ -21,12 +23,14 @@ func _process(delta):
 			subtitle_box.visible = false
 			_show_next_subtitle()
 
+
 func show_subtitle(text: String, duration: float = 3.0):
 	if not subtitles_enabled:
 		return
 	subtitle_queue.append({"text": text, "duration": duration})
 	if current_subtitle_timer <= 0:
 		_show_next_subtitle()
+
 
 func _show_next_subtitle():
 	if subtitle_queue.is_empty():
@@ -36,6 +40,7 @@ func _show_next_subtitle():
 	subtitle_box.text = sub.text
 	subtitle_box.visible = true
 	current_subtitle_timer = sub.duration
+
 
 func _on_sfx_played(path: String, position: Vector3):
 	if not audio_indicators_enabled:
@@ -54,6 +59,7 @@ func _on_sfx_played(path: String, position: Vector3):
 	var angle = atan2(dir.x, dir.z) - player.rotation.y
 	_show_direction_indicator(angle, dist)
 
+
 func _show_direction_indicator(angle: float, distance: float):
 	if not direction_indicator:
 		return
@@ -66,11 +72,13 @@ func _show_direction_indicator(angle: float, distance: float):
 	await get_tree().create_timer(2.0).timeout
 	direction_indicator.visible = false
 
+
 func set_subtitles_enabled(enabled: bool):
 	subtitles_enabled = enabled
 	if not enabled:
 		subtitle_box.visible = false
 		subtitle_queue.clear()
+
 
 func set_audio_indicators_enabled(enabled: bool):
 	audio_indicators_enabled = enabled

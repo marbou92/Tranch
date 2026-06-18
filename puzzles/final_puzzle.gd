@@ -12,10 +12,12 @@ var chemical_inputs: Array = []
 var power_inputs: Array = []
 var stages_completed: int = 0
 
+
 func _ready():
 	super._ready()
 	puzzle_id = "final_puzzle"
 	is_multi_step = true
+
 
 func input_sample_id(id: String):
 	if current_stage != Stage.SAMPLE_ID:
@@ -26,6 +28,7 @@ func input_sample_id(id: String):
 		puzzle_progress.emit(puzzle_id, 1)
 	else:
 		fail()
+
 
 func input_chemical(chem: String):
 	if current_stage != Stage.CHEMICAL_SEQUENCE:
@@ -40,6 +43,7 @@ func input_chemical(chem: String):
 		advance_stage()
 		puzzle_progress.emit(puzzle_id, 2)
 
+
 func input_power_switch(switch_id: int):
 	if current_stage != Stage.POWER_OVERRIDE:
 		return
@@ -53,9 +57,11 @@ func input_power_switch(switch_id: int):
 		solve()
 		_trigger_endgame()
 
+
 func advance_stage():
 	stages_completed += 1
 	current_stage = stages_completed as Stage
+
 
 func _trigger_endgame():
 	# Determine which ending based on player's collected items and lore

@@ -19,23 +19,29 @@ enum DetectionType { VISION, SOUND, PROXIMITY }
 var is_active: bool = true
 var current_state: String = "patrol"
 
+
 func _ready():
 	add_to_group("enemies")
+
 
 func can_operate_in_zone(zone_id: String) -> bool:
 	if zone_id == "exterior" and not can_enter_exterior:
 		return false
 	return true
 
+
 func _on_distract(position: Vector3):
 	pass
+
 
 func _on_player_spotted():
 	pass
 
+
 func deactivate():
 	is_active = false
 	set_physics_process(false)
+
 
 func activate():
 	is_active = true

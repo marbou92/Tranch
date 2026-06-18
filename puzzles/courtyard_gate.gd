@@ -7,13 +7,18 @@ extends PuzzleBase
 
 var entered_code: String = ""
 
+
 func _ready():
 	super._ready()
 	puzzle_id = "courtyard_gate"
 	code_length = 4
 
+
 func get_correct_code() -> String:
-	return str(digit_from_main) + str(digit_from_science) + str(digit_from_gym) + str(digit_from_cafe)
+	return (
+		str(digit_from_main) + str(digit_from_science) + str(digit_from_gym) + str(digit_from_cafe)
+	)
+
 
 func enter_digit(digit: int):
 	if entered_code.length() < 4:
@@ -23,6 +28,7 @@ func enter_digit(digit: int):
 	if entered_code.length() == 4:
 		check_code()
 
+
 func check_code():
 	if entered_code == get_correct_code():
 		solve()
@@ -30,6 +36,7 @@ func check_code():
 	else:
 		fail()
 		entered_code = ""
+
 
 func open_gate():
 	EventBus.play_sfx.emit("res://audio/sfx/gate_open.ogg", global_position)

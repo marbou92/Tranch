@@ -9,8 +9,7 @@ func before_each():
 
 
 func test_inventory_has_8_slots():
-	assert_eq(InventorySystem.MAX_SLOTS, 8,
-		"GDD §4.4: 'Players carry a maximum of 8 slots'")
+	assert_eq(InventorySystem.MAX_SLOTS, 8, "GDD §4.4: 'Players carry a maximum of 8 slots'")
 
 
 func test_add_item_fills_empty_slot():
@@ -39,8 +38,9 @@ func test_key_fragments_do_not_stack():
 	InventorySystem.try_add_item("key_frag_4", InventorySystem.ItemCategory.KEY)
 	# Each fragment should be in its own slot
 	for i in range(4):
-		assert_ne(InventorySystem.slots[i].item_id, "",
-			"Key fragment %d must occupy its own slot" % i)
+		assert_ne(
+			InventorySystem.slots[i].item_id, "", "Key fragment %d must occupy its own slot" % i
+		)
 		assert_eq(InventorySystem.slots[i].count, 1, "Non-stackable item count must be 1")
 
 

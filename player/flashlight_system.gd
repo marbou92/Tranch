@@ -14,8 +14,10 @@ var is_dim: bool = false
 
 @onready var light_node: SpotLight3D = get_node_or_null("../Camera3D/FlashlightSpotLight3D")
 
+
 func _ready():
 	battery = MAX_BATTERY
+
 
 func toggle():
 	if battery <= 0:
@@ -25,9 +27,11 @@ func toggle():
 		light_node.visible = is_on
 	_update_mode()
 
+
 func set_dim(dim: bool):
 	is_dim = dim
 	_update_mode()
+
 
 func _update_mode():
 	if not light_node:
@@ -38,6 +42,7 @@ func _update_mode():
 	else:
 		light_node.spot_angle = 45.0
 		light_node.light_energy = 4.0
+
 
 func drain(delta: float):
 	if not is_on:
@@ -51,9 +56,11 @@ func drain(delta: float):
 			light_node.visible = false
 		flashlight_out.emit()
 
+
 func add_battery(amount: float = BATTERY_PICKUP_VALUE):
 	battery = min(MAX_BATTERY, battery + amount)
 	battery_changed.emit(battery)
+
 
 func get_battery_percent() -> float:
 	return battery / MAX_BATTERY * 100.0

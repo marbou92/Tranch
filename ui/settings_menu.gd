@@ -23,10 +23,12 @@ extends Control
 
 var settings: Dictionary = {}
 
+
 func _ready():
 	_load_settings()
 	_connect_signals()
 	_apply_to_ui()
+
 
 func _connect_signals():
 	master_slider.value_changed.connect(_on_master_volume_changed)
@@ -46,6 +48,7 @@ func _connect_signals():
 	permadeath_check.toggled.connect(_on_permadeath_changed)
 	back_button.pressed.connect(_on_back)
 
+
 func _load_settings():
 	var file = FileAccess.open("user://settings.json", FileAccess.READ)
 	if file:
@@ -55,6 +58,7 @@ func _load_settings():
 		settings = json.data
 	else:
 		settings = _default_settings()
+
 
 func _default_settings() -> Dictionary:
 	return {
@@ -75,11 +79,13 @@ func _default_settings() -> Dictionary:
 		"permadeath": false,
 	}
 
+
 func _save_settings():
 	var file = FileAccess.open("user://settings.json", FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(settings, "\t"))
 		file.close()
+
 
 func _apply_to_ui():
 	master_slider.value = settings.get("master_volume", 1.0)
@@ -98,10 +104,12 @@ func _apply_to_ui():
 	text_size_option.selected = settings.get("text_size", 1)
 	permadeath_check.button_pressed = settings.get("permadeath", false)
 
+
 func _on_master_volume_changed(value):
 	settings.master_volume = value
 	AudioServer.set_bus_volume_db(0, linear_to_db(value))
 	_save_settings()
+
 
 func _on_music_volume_changed(value):
 	settings.music_volume = value
@@ -110,12 +118,14 @@ func _on_music_volume_changed(value):
 		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 	_save_settings()
 
+
 func _on_sfx_volume_changed(value):
 	settings.sfx_volume = value
 	var bus_idx = AudioServer.get_bus_index("SFX")
 	if bus_idx >= 0:
 		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 	_save_settings()
+
 
 func _on_ambient_volume_changed(value):
 	settings.ambient_volume = value
@@ -124,13 +134,16 @@ func _on_ambient_volume_changed(value):
 		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 	_save_settings()
 
+
 func _on_mouse_sens_changed(value):
 	settings.mouse_sensitivity = value
 	_save_settings()
 
+
 func _on_invert_y_changed(pressed):
 	settings.invert_y = pressed
 	_save_settings()
+
 
 func _on_fov_changed(value):
 	settings.fov = int(value)
@@ -139,12 +152,14 @@ func _on_fov_changed(value):
 		player.camera.fov = value
 	_save_settings()
 
+
 func _on_graphics_tier_changed(index):
 	var tier = index - 1  # -1 = auto, 0 = low, 1 = medium, 2 = high
 	settings.graphics_tier = tier
 	if tier >= 0:
 		GraphicsTierManager.apply_tier(tier as GraphicsTierManager.Tier)
 	_save_settings()
+
 
 func _on_vsync_changed(pressed):
 	settings.vsync = pressed
@@ -154,38 +169,50 @@ func _on_vsync_changed(pressed):
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	_save_settings()
 
+
 func _on_fps_cap_changed(index):
 	settings.fps_cap = index
 	match index:
-		0: Engine.max_fps = 0
-		1: Engine.max_fps = 30
-		2: Engine.max_fps = 60
-		3: Engine.max_fps = 120
-		4: Engine.max_fps = 144
+		0:
+			Engine.max_fps = 0
+		1:
+			Engine.max_fps = 30
+		2:
+			Engine.max_fps = 60
+		3:
+			Engine.max_fps = 120
+		4:
+			Engine.max_fps = 144
 	_save_settings()
+
 
 func _on_subtitles_changed(pressed):
 	settings.subtitles = pressed
 	_save_settings()
 
+
 func _on_audio_indicators_changed(pressed):
 	settings.audio_indicators = pressed
 	_save_settings()
+
 
 func _on_colorblind_changed(index):
 	settings.colorblind_mode = index
 	# Apply colorblind filter
 	_save_settings()
 
+
 func _on_text_size_changed(index):
 	settings.text_size = index
 	# Apply text size scaling
 	_save_settings()
 
+
 func _on_permadeath_changed(pressed):
 	settings.permadeath = pressed
 	GameState.permadeath_enabled = pressed
 	_save_settings()
+
 
 func _on_back():
 	get_tree().change_scene_to_file("res://ui/main_menu.tscn")

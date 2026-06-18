@@ -9,11 +9,13 @@ extends StaticBody3D
 
 var is_highlighted: bool = false
 
+
 func interact(player: CharacterBody3D):
 	if is_pickup and item_id != "":
 		_pick_up(player)
 	else:
 		_custom_interact(player)
+
 
 func _pick_up(player: CharacterBody3D):
 	var inv = get_node_or_null("/root/InventorySystem")
@@ -24,12 +26,15 @@ func _pick_up(player: CharacterBody3D):
 		# Inventory full feedback
 		pass
 
+
 func _custom_interact(_player: CharacterBody3D):
 	# Override in specific interactable scripts
 	pass
 
+
 func get_interaction_text() -> String:
 	return interaction_text
+
 
 func set_highlight(enabled: bool):
 	is_highlighted = enabled
@@ -40,6 +45,7 @@ func set_highlight(enabled: bool):
 			mesh.material_overlay = _create_outline_mat()
 		else:
 			mesh.material_overlay = null
+
 
 func _create_outline_mat() -> ShaderMaterial:
 	var mat = ShaderMaterial.new()

@@ -19,6 +19,7 @@ const HALLUCINATION_COOLDOWN = 10.0
 
 var _previous_threshold: float = 100.0
 
+
 func _process(delta):
 	_apply_drain(delta)
 	_apply_effects()
@@ -28,6 +29,7 @@ func _process(delta):
 	if hallucination_cooldown > 0:
 		hallucination_cooldown -= delta
 
+
 func _apply_drain(delta):
 	if is_in_safe_room:
 		sanity = min(100, sanity + RESTORE_SAFE * delta)
@@ -35,24 +37,30 @@ func _apply_drain(delta):
 	# Dark drain is handled by player controller
 	# Entity drain is called externally
 
+
 func drain_entity(delta):
 	sanity = max(0, sanity - DRAIN_ENTITY * delta)
 	if sanity <= 0:
 		blackout_triggered.emit()
 
+
 func drain_dark(delta):
 	if not is_in_safe_room:
 		sanity = max(0, sanity - DRAIN_DARK * delta)
 
+
 func restore_light(delta):
 	sanity = min(100, sanity + RESTORE_LIGHT * delta)
+
 
 func restore_safe(delta):
 	if is_in_safe_room:
 		sanity = min(100, sanity + RESTORE_SAFE * delta)
 
+
 func use_medicine():
 	sanity = min(100, sanity + RESTORE_MEDICINE)
+
 
 func _apply_effects():
 	var t = 1.0 - (sanity / 100.0)
@@ -94,6 +102,7 @@ func _apply_effects():
 	if sanity < 9:
 		input_loss_timer = 2.0
 
+
 func _check_thresholds():
 	var thresholds = [75.0, 50.0, 25.0, 10.0]
 	for threshold in thresholds:
@@ -101,8 +110,10 @@ func _check_thresholds():
 			sanity_threshold_crossed.emit(threshold)
 	_previous_threshold = sanity
 
+
 func set_safe_room(in_safe: bool):
 	is_in_safe_room = in_safe
+
 
 func get_sanity_state() -> String:
 	if sanity >= 75:
@@ -116,8 +127,10 @@ func get_sanity_state() -> String:
 	else:
 		return "critical"
 
+
 func is_input_lost() -> bool:
 	return input_loss_timer > 0
+
 
 func _process_input_loss(delta):
 	if input_loss_timer > 0:

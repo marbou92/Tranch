@@ -13,8 +13,10 @@ signal puzzle_solved(puzzle_id: String)
 signal puzzle_failed(puzzle_id: String)
 signal puzzle_progress(puzzle_id: String, step: int)
 
+
 func _ready():
 	add_to_group("puzzles")
+
 
 func start_puzzle():
 	if is_solved:
@@ -23,17 +25,21 @@ func start_puzzle():
 	EventBus.puzzle_started.emit(puzzle_id)
 	GameState.solve_puzzle(puzzle_id)
 
+
 func solve():
 	is_solved = true
 	puzzle_solved.emit(puzzle_id)
 	EventBus.puzzle_solved.emit(puzzle_id)
 
+
 func fail():
 	puzzle_failed.emit(puzzle_id)
 	EventBus.puzzle_failed.emit(puzzle_id)
 
+
 func check_requirements() -> bool:
 	return true
+
 
 func reset():
 	is_solved = false
